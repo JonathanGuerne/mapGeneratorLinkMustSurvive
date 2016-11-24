@@ -1,0 +1,633 @@
+/*
+ * To change this license header, choose License Headers in Project Properties
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mapgenerator;
+
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+
+/**
+ *
+ * @author jonathan.guerne
+ */
+public class MainFrame extends javax.swing.JFrame {
+
+    ArrayList<String> listImages;
+    ArrayList<String> listeImagesLayer0;
+    ArrayList<String> listeImagesLayer1;
+    ArrayList<String> listeImagesLayer2;
+
+    /**
+     * Creates new form MainFrame
+     */
+    public MainFrame() {
+        initComponents();
+        File curDir = new File("src/images");
+
+        ArrayList<String> listBiome;
+        System.out.println(curDir.getAbsolutePath());
+        listBiome = Util.getAllDir(curDir);
+
+        for (String s : listBiome) {
+            ComboBoxBiome.addItem(s);
+        }
+
+        File firstSubDir = new File("src/images/" + listBiome.get(0));
+
+        listImages = Util.getAllFiles(firstSubDir);
+
+        initLayersButton(listBiome.get(0));
+    }
+
+    void initLayersButton(String biome) {
+        listeImagesLayer0 = new ArrayList<>();
+        listeImagesLayer1 = new ArrayList<>();
+        listeImagesLayer2 = new ArrayList<>();
+
+        for (String str : listImages) {
+            String subStr = str.substring(0, 2);
+            switch (subStr) {
+                case "g_":
+                    listeImagesLayer0.add(str);
+                    break;
+                case "d_":
+                    listeImagesLayer1.add(str);
+                    break;
+                case "o_":
+                    listeImagesLayer2.add(str);
+                    break;
+            }
+        }
+
+        
+        panelLayer0.removeAll();
+        panelLayer0.setLayout(new GridLayout(3, 3));
+
+        for (String str : listeImagesLayer0) {
+            str = str.substring(0, str.length() - 4);
+            Image img = Util.loadImage(biome + "/" + str);
+            myLayerBtn btn = new myLayerBtn(new ImageIcon(img), str);
+            btn.addActionListener(new java.awt.event.ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (mainPanelMap1.layer == 0) {
+                        myLayerBtn btn = (myLayerBtn) ae.getSource();
+                        changeCode(btn.code);
+                    }
+                }
+            });
+            panelLayer0.add(btn);
+        }
+        panelLayer0.validate();
+        panelLayer0.repaint();
+        
+        panelLayer1.removeAll();
+        panelLayer1.setLayout(new GridLayout(3, 3));
+
+        for (String str : listeImagesLayer1) {
+            str = str.substring(0, str.length() - 4);
+            Image img = Util.loadImage(biome + "/" + str);
+            myLayerBtn btn = new myLayerBtn(new ImageIcon(img), str);
+            btn.addActionListener(new java.awt.event.ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (mainPanelMap1.layer == 1) {
+                        myLayerBtn btn = (myLayerBtn) ae.getSource();
+                        changeCode(btn.code);
+                    }
+                }
+            });
+            panelLayer1.add(btn);
+        }
+        panelLayer1.validate();
+        panelLayer1.repaint();
+
+        panelLayer2.removeAll();
+        panelLayer2.setLayout(new GridLayout(3, 3));
+
+        for (String str : listeImagesLayer2) {
+            str = str.substring(0, str.length() - 4);
+            Image img = Util.loadImage(biome + "/" + str);
+            myLayerBtn btn = new myLayerBtn(new ImageIcon(img), str);
+            btn.addActionListener(new java.awt.event.ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (mainPanelMap1.layer == 2) {
+                        myLayerBtn btn = (myLayerBtn) ae.getSource();
+                        changeCode(btn.code);
+                    }
+                }
+            });
+            panelLayer2.add(btn);
+           
+        }
+        
+        
+        panelLayer2.validate();
+        panelLayer2.repaint();
+    }
+
+    void changeCode(String code) {
+        mainPanelMap1.CodeTemp = code;
+        String biome = (String) ComboBoxBiome.getSelectedItem();
+        mainPanelMap1.imgTemp = Util.loadImage(biome + "/" + code);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jSeparator1 = new javax.swing.JSeparator();
+        mainPanelMap1 = new mapgenerator.MainPanelMap();
+        RadioButtonLayer0 = new javax.swing.JRadioButton();
+        RadioButtonLayer2 = new javax.swing.JRadioButton();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jButton25 = new javax.swing.JButton();
+        RadioButtonLayer1 = new javax.swing.JRadioButton();
+        ComboBoxBiome = new javax.swing.JComboBox();
+        panelLayer0 = new javax.swing.JPanel();
+        panelLayer1 = new javax.swing.JPanel();
+        panelLayer2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        exporterMenu = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        javax.swing.GroupLayout mainPanelMap1Layout = new javax.swing.GroupLayout(mainPanelMap1);
+        mainPanelMap1.setLayout(mainPanelMap1Layout);
+        mainPanelMap1Layout.setHorizontalGroup(
+            mainPanelMap1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+        mainPanelMap1Layout.setVerticalGroup(
+            mainPanelMap1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        buttonGroup1.add(RadioButtonLayer0);
+        RadioButtonLayer0.setSelected(true);
+        RadioButtonLayer0.setText("Layer0");
+        RadioButtonLayer0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioButtonLayer0ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(RadioButtonLayer2);
+        RadioButtonLayer2.setText("Layer2");
+        RadioButtonLayer2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioButtonLayer2ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Layer 0");
+
+        jLabel2.setText("Layer 1");
+
+        jLabel3.setText("Layer 2");
+
+        jButton25.setText("Spawn mob");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(RadioButtonLayer1);
+        RadioButtonLayer1.setText("Layer1");
+        RadioButtonLayer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioButtonLayer1ActionPerformed(evt);
+            }
+        });
+
+        ComboBoxBiome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxBiomeActionPerformed(evt);
+            }
+        });
+
+        panelLayer0.setBackground(new java.awt.Color(255, 255, 255));
+        panelLayer0.setAutoscrolls(true);
+        panelLayer0.setPreferredSize(new java.awt.Dimension(0, 120));
+
+        javax.swing.GroupLayout panelLayer0Layout = new javax.swing.GroupLayout(panelLayer0);
+        panelLayer0.setLayout(panelLayer0Layout);
+        panelLayer0Layout.setHorizontalGroup(
+            panelLayer0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+        panelLayer0Layout.setVerticalGroup(
+            panelLayer0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 120, Short.MAX_VALUE)
+        );
+
+        panelLayer1.setBackground(new java.awt.Color(255, 255, 255));
+        panelLayer1.setAutoscrolls(true);
+        panelLayer1.setPreferredSize(new java.awt.Dimension(0, 120));
+
+        javax.swing.GroupLayout panelLayer1Layout = new javax.swing.GroupLayout(panelLayer1);
+        panelLayer1.setLayout(panelLayer1Layout);
+        panelLayer1Layout.setHorizontalGroup(
+            panelLayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+        panelLayer1Layout.setVerticalGroup(
+            panelLayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 119, Short.MAX_VALUE)
+        );
+
+        panelLayer2.setBackground(new java.awt.Color(255, 255, 255));
+        panelLayer2.setAutoscrolls(true);
+        panelLayer2.setPreferredSize(new java.awt.Dimension(0, 120));
+
+        javax.swing.GroupLayout panelLayer2Layout = new javax.swing.GroupLayout(panelLayer2);
+        panelLayer2.setLayout(panelLayer2Layout);
+        panelLayer2Layout.setHorizontalGroup(
+            panelLayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 252, Short.MAX_VALUE)
+        );
+        panelLayer2Layout.setVerticalGroup(
+            panelLayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 129, Short.MAX_VALUE)
+        );
+
+        jButton1.setText("Remplir de");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jMenu1.setText("Fichier");
+
+        exporterMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        exporterMenu.setText("exporter");
+        exporterMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exporterMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(exporterMenu);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainPanelMap1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(RadioButtonLayer2)
+                                            .addComponent(RadioButtonLayer0)
+                                            .addComponent(RadioButtonLayer1))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton25)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(ComboBoxBiome, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap())
+                            .addComponent(jSeparator2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jLabel1)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(panelLayer1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(panelLayer2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 5, Short.MAX_VALUE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(panelLayer0, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap())))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addComponent(mainPanelMap1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(RadioButtonLayer0)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadioButtonLayer1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadioButtonLayer2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel1))
+                    .addComponent(ComboBoxBiome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(panelLayer0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jButton1)))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelLayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(panelLayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void RadioButtonLayer0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioButtonLayer0ActionPerformed
+        mainPanelMap1.layer = 0;
+        mainPanelMap1.repaint();
+    }//GEN-LAST:event_RadioButtonLayer0ActionPerformed
+
+    private void RadioButtonLayer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioButtonLayer2ActionPerformed
+        mainPanelMap1.layer = 2;
+        mainPanelMap1.repaint();
+    }//GEN-LAST:event_RadioButtonLayer2ActionPerformed
+
+    private void exporterMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exporterMenuActionPerformed
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Dossier de destination");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            System.out.println("getSelectedFile() : "
+                    + chooser.getSelectedFile());
+
+            Writer writer = null;
+
+            try {
+                //layer0
+                writer = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(chooser.getSelectedFile() + "/layer0.txt"), "utf-8"));
+                for (int i = 0; i < mainPanelMap1.nbLigne; i++) {
+                    for (int j = 0; j < mainPanelMap1.nbLigne; j++) {
+                        writer.write(mainPanelMap1.listLayer[0][i][j].code);
+                        if (j < mainPanelMap1.nbLigne - 1) {
+                            writer.write(";");
+                        }
+                    }
+                    writer.write("\r\n");
+                }
+
+            } catch (IOException ex) {
+                // report
+            } finally {
+                try {
+                    writer.close();
+                } catch (Exception ex) {/*ignore*/
+
+                }
+            }
+
+            try {
+                //layer1
+                writer = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(chooser.getSelectedFile() + "/layer1.txt"), "utf-8"));
+                for (int i = 0; i < mainPanelMap1.nbLigne; i++) {
+                    for (int j = 0; j < mainPanelMap1.nbLigne; j++) {
+                        writer.write(mainPanelMap1.listLayer[1][i][j].code);
+                        if (j < mainPanelMap1.nbLigne - 1) {
+                            writer.write(";");
+                        }
+                    }
+                    writer.write("\r\n");
+                }
+            } catch (IOException ex) {
+
+            } finally {
+                try {
+                    writer.close();
+                } catch (Exception ex) {
+
+                }
+            }
+
+            try {
+                //layer2
+                writer = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(chooser.getSelectedFile() + "/layer2.txt"), "utf-8"));
+                for (int i = 0; i < mainPanelMap1.nbLigne; i++) {
+                    for (int j = 0; j < mainPanelMap1.nbLigne; j++) {
+                        writer.write(mainPanelMap1.listLayer[2][i][j].code);
+                        if (j < mainPanelMap1.nbLigne - 1) {
+                            writer.write(";");
+                        }
+                    }
+                    writer.write("\r\n");
+                }
+            } catch (IOException ex) {
+
+            } finally {
+                try {
+                    writer.close();
+                } catch (Exception ex) {
+
+                }
+            }
+
+            try {
+                //config
+                writer = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(chooser.getSelectedFile() + "/config.txt"), "utf-8"));
+                writer.write((String)ComboBoxBiome.getSelectedItem()+"\n");
+                for (int i = 0; i < mainPanelMap1.nbLigne; i++) {
+                    for (int j = 0; j < mainPanelMap1.nbLigne; j++) {
+                        if (mainPanelMap1.listLayer[2][i][j].isEnemmiSpawn) {
+                            writer.write(i + "," + j + ";");
+                        }
+
+                    }
+                }
+            } catch (IOException ex) {
+
+            } finally {
+                try {
+                    writer.close();
+                } catch (Exception ex) {
+
+                }
+            }
+
+        } else {
+            System.out.println("No Selection ");
+        }
+
+    }//GEN-LAST:event_exporterMenuActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        mainPanelMap1.layer = 2;
+        mainPanelMap1.spawnMob = true;
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void RadioButtonLayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioButtonLayer1ActionPerformed
+        mainPanelMap1.layer = 1;
+    }//GEN-LAST:event_RadioButtonLayer1ActionPerformed
+
+    private void ComboBoxBiomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxBiomeActionPerformed
+
+        for(int k=0;k<3;k++){
+            for(int i=0;i<mainPanelMap1.nbLigne;i++){
+                for(int j=0;j<mainPanelMap1.nbLigne;j++){
+                    Case c=mainPanelMap1.listLayer[k][i][j];
+                    c.code="0";
+                    c.img=null;
+                    c.isEnemmiSpawn=false;
+                }
+            }
+        }
+        
+        mainPanelMap1.repaint();
+        
+        File firstSubDir = new File(".\\src\\images\\" + (String) ComboBoxBiome.getSelectedItem());
+
+        listImages = Util.getAllFiles(firstSubDir);
+
+        initLayersButton((String) ComboBoxBiome.getSelectedItem());
+    }//GEN-LAST:event_ComboBoxBiomeActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(mainPanelMap1.layer==0 && mainPanelMap1.CodeTemp!="0" && mainPanelMap1.imgTemp!=null){
+            for(int i=0;i<mainPanelMap1.nbLigne;i++){
+                for(int j=0;j<mainPanelMap1.nbLigne;j++){
+                    mainPanelMap1.layer0[i][j].code=mainPanelMap1.CodeTemp;
+                    mainPanelMap1.layer0[i][j].img=mainPanelMap1.imgTemp;
+                }
+            }
+            
+            mainPanelMap1.repaint();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox ComboBoxBiome;
+    private javax.swing.JRadioButton RadioButtonLayer0;
+    private javax.swing.JRadioButton RadioButtonLayer1;
+    private javax.swing.JRadioButton RadioButtonLayer2;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JMenuItem exporterMenu;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private mapgenerator.MainPanelMap mainPanelMap1;
+    private javax.swing.JPanel panelLayer0;
+    private javax.swing.JPanel panelLayer1;
+    private javax.swing.JPanel panelLayer2;
+    // End of variables declaration//GEN-END:variables
+}
